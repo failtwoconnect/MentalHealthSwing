@@ -5,25 +5,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class RunGUI {
 
-    private final int WINDOW_LENGTH = 800;
-    private final int WINDOW_WIDTH = 600;
     private final Path SAVE_FILEPATH = Path.of("src\\responseHistory.txt");
     private final Path LOAD_FILEPATH = Path.of("src\\response.txt");
     private int counter = 1;
     private ArrayList<String> answerQuestions;
     private String[] responseQuestions;
     private JPanel northPanel;
-    private JPanel borderleftPanel;
-    private JPanel borderRightPanel;
-    private JPanel borderSouthPanel;
     private JPanel answerPanel;
     private JPanel borderCenterPanel;
     private JPanel submitButtonPanel;
@@ -49,6 +42,8 @@ public class RunGUI {
         answerQuestions = new ArrayList<>();
         JFrame window = new JFrame();
         window.setTitle("hello world");
+        int WINDOW_LENGTH = 800;
+        int WINDOW_WIDTH = 600;
         window.setSize(WINDOW_LENGTH, WINDOW_WIDTH);
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
