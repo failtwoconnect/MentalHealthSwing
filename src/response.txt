@@ -1,0 +1,8 @@
+What is your anxiety level like today (0-7)?
+What is your depression level like today (0-7)?
+What is your self-harm level like today (0-7)?
+What is your suicidal ideation level like today (0-7)?
+What is your energy level like today (0-7)?
+What is your impulse level like today (0-7)?
+What is your craving level like today (0-7)?
+Did you self-harm today (true/false)?
