@@ -15,24 +15,11 @@ public class RunGUI {
     private final Path LOAD_FILEPATH = Path.of("src\\response.txt");
     private int counter = 1;
     private ArrayList<String> answerQuestions;
-    private String[] responseQuestions;
-    private JPanel northPanel;
-    private JPanel answerPanel;
-    private JPanel borderCenterPanel;
-    private JPanel submitButtonPanel;
-    private JRadioButton radioButton0;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
-    private JRadioButton radioButton4;
-    private JRadioButton radioButton5;
-    private JRadioButton radioButton6;
-    private JRadioButton radioButton7;
+    private ArrayList<String> responseQuestions;
     private ButtonGroup radioButtonGroupScore;
-    private JLabel questionHeader;
     private JLabel errorLabel;
     private JLabel question;
-    private JButton submitButton;
+
     public RunGUI(){
 
     }
@@ -43,8 +30,8 @@ public class RunGUI {
         JFrame window = new JFrame();
         window.setTitle("hello world");
         int WINDOW_LENGTH = 800;
-        int WINDOW_WIDTH = 600;
-        window.setSize(WINDOW_LENGTH, WINDOW_WIDTH);
+        int WINDOW_HEIGHT = 600;
+        window.setSize(WINDOW_LENGTH, WINDOW_HEIGHT);
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.setLayout(new BorderLayout());
@@ -54,19 +41,19 @@ public class RunGUI {
     }
 
     private void loadFile(){
-        responseQuestions = new String[8];
-        int ctr = 0;
+        responseQuestions = new ArrayList<>();
         String content;
         try(BufferedReader br = Files.newBufferedReader(LOAD_FILEPATH)){
             while((content = br.readLine()) != null){
-                responseQuestions[ctr] = content;
-                ctr++;
+                responseQuestions.add(content);
             }
 
         }catch(Exception e){
             errorLabel.setText("String file not loaded.");
         }
     }
+
+
     private void writeToFile() throws IOException {
         StringBuilder content = new StringBuilder();
         Date date = new Date();
@@ -74,10 +61,10 @@ public class RunGUI {
             content.append(s);
         }
         if(Files.exists(SAVE_FILEPATH))
-            Files.writeString(SAVE_FILEPATH, content, StandardOpenOption.APPEND);
+            Files.writeString(SAVE_FILEPATH, content.append(",").append(date), StandardOpenOption.APPEND);
         else
-            Files.writeString(SAVE_FILEPATH, content, StandardOpenOption.CREATE);
-        Files.writeString(SAVE_FILEPATH,date.toString() + "\n",StandardOpenOption.APPEND);
+            Files.writeString(SAVE_FILEPATH, content.append(",").append(date), StandardOpenOption.CREATE);
+        Files.writeString(SAVE_FILEPATH,"\n",StandardOpenOption.APPEND);
         answerQuestions.clear();
     }
 
@@ -87,26 +74,26 @@ public class RunGUI {
                 if(radioButtonGroupScore.getSelection().isSelected()) {
                     errorLabel.setText("");
                     answerQuestions.add(radioButtonGroupScore.getSelection().getActionCommand() + ",");
-                    question.setText(responseQuestions[counter]);
+                    question.setText(responseQuestions.get(counter));
                     counter++;
                 }
 
             }else {
+                answerQuestions.add(radioButtonGroupScore.getSelection().getActionCommand());
                 counter = 1;
-                question.setText(responseQuestions[0]);
+                question.setText(responseQuestions.get(0));
                 writeToFile();
 
             }
         }catch(Exception exception){
             errorLabel.setText("Error: Nothing is selected.");
-            exception.printStackTrace();
         }
 
 
     }
 
     private JPanel borderCenter(){
-        borderCenterPanel = new JPanel(new GridBagLayout());
+        JPanel borderCenterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         question = new JLabel("What is your anxiety level like today (0-7)?");
         c.gridx = 1;
@@ -131,9 +118,9 @@ public class RunGUI {
     }
 
     private JPanel submitButtonPanel(){
-        submitButtonPanel = new JPanel(new GridBagLayout());
+        JPanel submitButtonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        submitButton = new JButton("Submit Answer");
+        JButton submitButton = new JButton("Submit Answer");
         c.gridx = 2;
         c.gridy = 1;
         c.gridwidth = 2;
@@ -145,11 +132,11 @@ public class RunGUI {
     }
 
     private JPanel borderCenterAnswerPanel(){
-        answerPanel = new JPanel(new GridBagLayout());
+        JPanel answerPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         radioButtonGroupScore = new ButtonGroup();
 
-        radioButton0 = new JRadioButton("0 (Zero)");
+        JRadioButton radioButton0 = new JRadioButton("0 (Zero)");
         radioButton0.setActionCommand("0");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -158,7 +145,7 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton0);
         answerPanel.add(radioButton0, c);
 
-        radioButton1 = new JRadioButton("1");
+        JRadioButton radioButton1 = new JRadioButton("1");
         radioButton1.setActionCommand("1");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
@@ -166,7 +153,7 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton1);
         answerPanel.add(radioButton1, c);
 
-        radioButton2 = new JRadioButton("2");
+        JRadioButton radioButton2 = new JRadioButton("2");
         radioButton2.setActionCommand("2");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 2;
@@ -174,7 +161,7 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton2);
         answerPanel.add(radioButton2, c);
 
-        radioButton3 = new JRadioButton("3");
+        JRadioButton radioButton3 = new JRadioButton("3");
         radioButton3.setActionCommand("3");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 3;
@@ -182,7 +169,7 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton3);
         answerPanel.add(radioButton3, c);
 
-        radioButton4 = new JRadioButton("4");
+        JRadioButton radioButton4 = new JRadioButton("4");
         radioButton4.setActionCommand("4");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 4;
@@ -190,7 +177,7 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton4);
         answerPanel.add(radioButton4, c);
 
-        radioButton5 = new JRadioButton("5");
+        JRadioButton radioButton5 = new JRadioButton("5");
         radioButton5.setActionCommand("5");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 5;
@@ -198,15 +185,15 @@ public class RunGUI {
         radioButtonGroupScore.add(radioButton5);
         answerPanel.add(radioButton5, c);
 
-        radioButton6 = new JRadioButton("6");
+        JRadioButton radioButton6 = new JRadioButton("6");
         radioButton6.setActionCommand("6");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 6;
         c.gridy = 1;
         radioButtonGroupScore.add(radioButton6);
-        answerPanel.add(radioButton6 ,c);
+        answerPanel.add(radioButton6,c);
 
-        radioButton7 = new JRadioButton("7");
+        JRadioButton radioButton7 = new JRadioButton("7");
         radioButton7.setActionCommand("7");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 7;
@@ -217,9 +204,9 @@ public class RunGUI {
         return answerPanel;
     }
     private JPanel borderNorth(){
-        northPanel = new JPanel(new GridBagLayout());
+        JPanel northPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        questionHeader = new JLabel();
+        JLabel questionHeader = new JLabel();
         questionHeader.setText("Hello World.");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipadx = 40;
