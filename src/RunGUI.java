@@ -77,7 +77,7 @@ public class RunGUI {
             Files.writeString(SAVE_FILEPATH, content, StandardOpenOption.APPEND);
         else
             Files.writeString(SAVE_FILEPATH, content, StandardOpenOption.CREATE);
-        Files.writeString(SAVE_FILEPATH,"\n" + date.toString(),StandardOpenOption.APPEND);
+        Files.writeString(SAVE_FILEPATH,date.toString() + "\n",StandardOpenOption.APPEND);
         answerQuestions.clear();
     }
 
@@ -92,8 +92,8 @@ public class RunGUI {
                 }
 
             }else {
-                counter = 0;
-                question.setText(responseQuestions[counter]);
+                counter = 1;
+                question.setText(responseQuestions[0]);
                 writeToFile();
 
             }
