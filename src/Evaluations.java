@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-public class TherpyEvaluation {
+public class Evaluations {
     int anxietyScore;
     int depressionScore;
     int selfHarmScore;
@@ -14,7 +14,7 @@ public class TherpyEvaluation {
     int cravingsScore;
     boolean physicalSelfHarm;
 
-    public TherpyEvaluation(int anxietyScore, int depressionScore, int selfHarmScore, int suicidalIdeationScore, int energyLevelScore, int impulseLevelScore, int cravingsScore, boolean physicalSelfHarm) {
+    public Evaluations(int anxietyScore, int depressionScore, int selfHarmScore, int suicidalIdeationScore, int energyLevelScore, int impulseLevelScore, int cravingsScore, boolean physicalSelfHarm) {
         this.anxietyScore = anxietyScore;
         this.depressionScore = depressionScore;
         this.selfHarmScore = selfHarmScore;
