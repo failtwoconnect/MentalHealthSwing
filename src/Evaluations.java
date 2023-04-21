@@ -12,9 +12,9 @@ public class Evaluations {
     int energyLevelScore;
     int impulseLevelScore;
     int cravingsScore;
-    boolean physicalSelfHarm;
+    int physicalSelfHarm;
 
-    public Evaluations(int anxietyScore, int depressionScore, int selfHarmScore, int suicidalIdeationScore, int energyLevelScore, int impulseLevelScore, int cravingsScore, boolean physicalSelfHarm) {
+    public Evaluations(int anxietyScore, int depressionScore, int selfHarmScore, int suicidalIdeationScore, int energyLevelScore, int impulseLevelScore, int cravingsScore, int physicalSelfHarm) {
         this.anxietyScore = anxietyScore;
         this.depressionScore = depressionScore;
         this.selfHarmScore = selfHarmScore;
@@ -81,11 +81,11 @@ public class Evaluations {
         this.cravingsScore = cravingsScore;
     }
 
-    public boolean isPhysicalSelfHarm() {
+    public int isPhysicalSelfHarm() {
         return physicalSelfHarm;
     }
 
-    public void setPhysicalSelfHarm(boolean physicalSelfHarm) {
+    public void setPhysicalSelfHarm(int physicalSelfHarm) {
         this.physicalSelfHarm = physicalSelfHarm;
     }
 
