@@ -1,4 +1,4 @@
-package Run;
+package UI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,12 +6,22 @@ import java.awt.event.ActionEvent;
 
 public class Goals {
 
-    JTextArea answerArea;
-    JLabel errorMessage;
+    private static JTextArea answerArea;
+    static JLabel errorMessage;
 
     public Goals() {
 
     }
+
+    public static JTextArea getAnswerArea() {
+        return answerArea;
+    }
+
+    public static void setAnswerArea(JTextArea answerArea) {
+        Goals.answerArea = answerArea;
+    }
+
+
     public void run(){
         JFrame window = new JFrame();
         window.setTitle("child window");
@@ -23,7 +33,7 @@ public class Goals {
         window.setVisible(true);
     }
 
-    private JPanel mainPanel(){
+    public static JComponent mainPanel(){
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -53,7 +63,7 @@ public class Goals {
         return panel;
     }
 
-    private JPanel buttonPanel(){
+    private static JComponent buttonPanel(){
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -62,7 +72,7 @@ public class Goals {
         c.gridy = 2;
         c.anchor = GridBagConstraints.PAGE_END;
         panel.add(submit, c);
-        submit.addActionListener(this::actionPerformed);
+        submit.addActionListener(Goals::actionPerformed);
 
         errorMessage = new JLabel("");
         c.gridx = 1;
@@ -71,23 +81,17 @@ public class Goals {
 
         return panel;
     }
-    public void actionPerformed(ActionEvent e){
+    public static void actionPerformed(ActionEvent e){
         try{
-            if(answerArea.getText().equals("")){
+            if (answerArea.getText().equals("")) {
                 errorMessage.setForeground(Color.RED);
                 errorMessage.setText("Text Area is blank.");
-            }else{
+            } else {
                 errorMessage.setText("");
-
             }
 
         }catch(Exception exception){
             exception.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Goals g = new Goals();
-        g.run();
     }
 }

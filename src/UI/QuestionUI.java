@@ -1,4 +1,4 @@
-package Run;
+package UI;
 
 import Therapy.Evaluations;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class QuestionUI {
-    private String saveFilePath;
+    private final String SAVE_FILE_PATH = "src/responseHistory.txt";
     private String loadFilePath;
     private ArrayList<String> responseQuestions = new ArrayList<>();
     private int responseQuestionCounter = 1;
@@ -27,26 +27,14 @@ public class QuestionUI {
     }
 
 
-    public QuestionUI(ArrayList<String> answerQuestions, ArrayList<Evaluations> therapyEvaluations){
-        this.answerQuestions = answerQuestions;
-        this.therapyEvaluations = therapyEvaluations;
-    }
-
-    public ArrayList<String> getResponseQuestions() {
-        return responseQuestions;
-    }
-
     public void setResponseQuestions(ArrayList<String> responseQuestions) {
         this.responseQuestions = responseQuestions;
     }
 
-    public void setQuestionText(QuestionUI questionUI, String text){
-        question.setText(questionUI.responseQuestions.get(0));
+    public void setQuestionText(String text){
+        question.setText(text);
     }
 
-    public String getSaveFilePath() {
-        return saveFilePath;
-    }
 
     public String getLoadFilePath() {
         return loadFilePath;
@@ -66,7 +54,6 @@ public class QuestionUI {
     private void submitButtonActionPerformed(ActionEvent event){
         try{
             String radioButtonScore = radioButtonGroupScore.getSelection().getActionCommand();
-            System.out.println("this is the size of the array " + responseQuestions.size());
             if("Submit Answer".equals(event.getActionCommand())
                     && responseQuestionCounter <= responseQuestions.size() - 1
                     && responseQuestionCounter >= 0 ){
@@ -87,7 +74,7 @@ public class QuestionUI {
                     evaluation = new Evaluations();
                     evaluation.arrayListConversion(answerQuestions);
                     therapyEvaluations.add(evaluation);
-                    evaluation.writeToFile(answerQuestions, saveFilePath);
+                    evaluation.writeToFile(answerQuestions, SAVE_FILE_PATH);
                     answerQuestions.clear();
                 }
                 else{
@@ -97,7 +84,7 @@ public class QuestionUI {
             }
         }catch(Exception exception){
             errorLabel.setForeground(Color.RED);
-            errorLabel.setText(exception.getMessage());
+            errorLabel.setText("Please load question file");
             exception.printStackTrace();
         }
     }
@@ -106,20 +93,7 @@ public class QuestionUI {
     }
 
 
-//    private void loadButtonActionPerformed(ActionEvent e){
-//        String content;
-//        try(BufferedReader br = Files.newBufferedReader(Path.of(saveFilePath))){
-//            while((content = br.readLine()) != null){
-//                evaluation = new Evaluations();
-//                evaluation.arrayOfStringsConversion(content.split(","));
-//                therapyEvaluations.add(evaluation);
-//            }
-//
-//        }catch(Exception exception){
-//            errorLabel.setText("String file not loaded.");
-//        }
-//    }
-    public JPanel borderCenter(){
+    public JComponent borderCenter(){
         JPanel borderCenterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -145,7 +119,7 @@ public class QuestionUI {
         return borderCenterPanel;
     }
 
-    private JPanel buttonPanel(){
+    protected JComponent buttonPanel(){
         JPanel submitButtonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -155,17 +129,10 @@ public class QuestionUI {
         submitButtonPanel.add(submitButton, c);
         submitButton.addActionListener(this::submitButtonActionPerformed);
 
-//        JButton loadButton = new JButton("Load");
-//        c.anchor = GridBagConstraints.PAGE_END;
-//        c.insets = new Insets(10,0,0,0);
-
-//        submitButtonPanel.add(loadButton, c);
-//        loadButton.addActionListener(this::loadButtonActionPerformed);
-
         return submitButtonPanel;
     }
 
-    private JPanel borderCenterAnswerPanel(){
+    protected JComponent borderCenterAnswerPanel(){
         JPanel answerPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         radioButtonGroupScore = new ButtonGroup();

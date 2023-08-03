@@ -1,9 +1,12 @@
+package Run;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//java -jar %DERBY_HOME%\lib\derbyrun.jar server start
 public class RunInLine {
     RunInLine(){
 
@@ -53,6 +56,7 @@ public class RunInLine {
                 System.out.println(content);
                 therapyEvaluationArray[ctr] = scan.nextLine();
                 ctr++;
+
             }
         }catch(Exception e){
             e.printStackTrace();

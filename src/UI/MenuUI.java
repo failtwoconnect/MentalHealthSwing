@@ -1,10 +1,13 @@
-package Run;
+package UI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class MenuUI {
-
+    private QuestionUI questionUI;
+    public MenuUI(QuestionUI questionUI){
+        this.questionUI = questionUI;
+    }
     public JMenuBar menuConfiguration(){
 
         JMenuBar menuBar = new JMenuBar();
@@ -22,6 +25,9 @@ public class MenuUI {
         fileMenuItem.addActionListener(this::LoadFileActionPerformed);
         fileMenu.add(fileMenuItem);
 
+        JMenuItem historyMenuItem = new JMenuItem("Load History");
+        historyMenuItem.addActionListener(this::loadHistoryActionPerformed);
+        fileMenu.add(historyMenuItem);
 
 
         return menuBar;
@@ -32,9 +38,14 @@ public class MenuUI {
     }
 
     private void LoadFileActionPerformed(ActionEvent e){
-        LoadMenuUI loadMenuUI = new LoadMenuUI();
+        LoadMenuUI loadMenuUI = new LoadMenuUI(questionUI);
         loadMenuUI.loadActionPerformed(e);
 
+    }
+
+    private void loadHistoryActionPerformed(ActionEvent e){
+        LoadMenuUI loadMenuUI = new LoadMenuUI();
+        loadMenuUI.loadHistoryActionPerformed(e);
     }
 
 }
