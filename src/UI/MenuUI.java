@@ -15,11 +15,11 @@ public class MenuUI {
         JMenu fileMenu = new JMenu("File");
 
         menuBar.add(fileMenu);
-        menuBar.add(goalMenu);
+//        menuBar.add(goalMenu);
 
-        JMenuItem goalMenuItem = new JMenuItem("Goal Tab");
-        goalMenuItem.addActionListener(this::menuActionPerformed);
-        goalMenu.add(goalMenuItem);
+//        JMenuItem goalMenuItem = new JMenuItem("Goal Tab");
+//        goalMenuItem.addActionListener(this::menuActionPerformed);
+//        goalMenu.add(goalMenuItem);
 
         JMenuItem fileMenuItem = new JMenuItem("Load File");
         fileMenuItem.addActionListener(this::LoadFileActionPerformed);
