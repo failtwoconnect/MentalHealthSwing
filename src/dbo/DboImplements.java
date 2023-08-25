@@ -7,11 +7,13 @@ import java.sql.*;
 
 public class DboImplements implements DBOHelper {
 
-    private static final String CONNECTION_STRING ="jdbc:derby://localhost:1527/MentalHealthSwingDB";
+    private static final String CONNECTION_STRING ="jdbc:derby://localhost:1527/C:/Apache/db-derby-10.16.1.1-bin/db-derby-10.16.1.1-bin/bin/MentalHealthSwingDB";
     private static final String CLIENTDRIVER = "org.apache.derby.jdbc.ClientDriver";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "toor";
 
+    public DboImplements() {
+    }
 
     public int selectAll (String table, String columnName){
         try{
@@ -37,19 +39,42 @@ public class DboImplements implements DBOHelper {
         return 1;
     }
 
-//    public int insertInto (String table, Evaluations eval){
-//        DBOHelper.loadDriver(CLIENTDRIVER);
-//        Connection dbConn = DBOHelper.connect2DB(CONNECTION_STRING,USERNAME,PASSWORD);
-//        String insertInto = "INSERT INTO " + table + "VALUES ("
-//                + eval.getAnxietyScore() + ","
-//                + eval.getDepressionScore() + ","
-//                + eval.getSelfHarmScore() + ","
-//                + eval.getSuicidalIdeationScore() + ","
-//                + eval.getEnergyLevelScore() + ","
-//                + eval.getCravingsScore() + ","
-//                + eval.isPhysicalSelfHarm() + ","
-//
-//    }
+    public int insertInto (String table, Evaluations eval){
+        try{
+            DBOHelper.loadDriver(CLIENTDRIVER);
+            Connection dbConn = DBOHelper.connect2DB(CONNECTION_STRING,USERNAME,PASSWORD);
+
+            String insertInto = "insert into dbo.\"Numbers\" " +
+                                "(\"Anxiety\", \"Depression\", \"SelfHarmNumber\", \"SuicidalIdeation\", \"EnergyLevel\", \"CravingLevel\", \"PhysicalHarm\", datetime)"
+                                + " Values(?,?,?,?,?,?,?,?)";
+            PreparedStatement stmt = dbConn.prepareStatement(insertInto);
+            stmt.setInt(1,eval.getAnxietyScore());
+            stmt.setInt(2, eval.getDepressionScore());
+            stmt.setInt(3, eval.getSelfHarmScore());
+            stmt.setInt(4, eval.getSuicidalIdeationScore());
+            stmt.setInt(5, eval.getEnergyLevelScore());
+            stmt.setInt(6, eval.getCravingsScore());
+            stmt.setBoolean(7, eval.isPhysicalSelfHarm());
+            stmt.setString(8, eval.getDate());
+            int rs = stmt.executeUpdate();
+            if(rs > 0){
+                System.out.println("Success");
+                stmt.close();
+                dbConn.close();
+                return 1;
+            }else{
+                System.out.println("There was a problem");
+                stmt.close();
+                dbConn.close();
+                return 0;
+            }
+        }catch (SQLException exception){
+            exception.printStackTrace();
+            return 0;
+        }
+
+//INSERT INTO dbo.Evaluation_Numbers (Anxiety,Depression,Self_Harm_Level,Suicidal_Ideation,Energy_Level,Craving_Level,Self_Harm,Datetime) VALUES (0,0,0,0,0,0,false,Thu Aug 24 02:16:42 CDT 2023)
+    }
 
 //    public int searchTime(ScheduleBean aSchedule){
 //        try{

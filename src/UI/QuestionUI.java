@@ -1,16 +1,20 @@
 package UI;
 
 import Therapy.Evaluations;
+import dbo.DboImplements;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class QuestionUI {
     private final String SAVE_FILE_PATH = "src/responseHistory.txt";
     private String loadFilePath;
+    private static final DboImplements dboImplements = new DboImplements();
+
     private ArrayList<String> responseQuestions = new ArrayList<>();
     private int responseQuestionCounter = 1;
     private ArrayList<Evaluations> therapyEvaluations = new ArrayList<>();
@@ -22,9 +26,7 @@ public class QuestionUI {
     private Evaluations evaluation;
 
 
-    public QuestionUI(){
-        submitButton.setEnabled(false);
-    }
+    public QuestionUI(){}
 
 
     public void setResponseQuestions(ArrayList<String> responseQuestions) {
@@ -70,11 +72,14 @@ public class QuestionUI {
                     responseQuestionCounter = 1;
                     question.setText(responseQuestions.get(0));
                     Date date = new Date();
-                    answerQuestions.add(date.toString());
+                    SimpleDateFormat dateFor = new SimpleDateFormat("MM/dd/YYYY");
+                    String formattedDate = dateFor.format(date);
+                    answerQuestions.add(formattedDate);
                     evaluation = new Evaluations();
                     evaluation.arrayListConversion(answerQuestions);
                     therapyEvaluations.add(evaluation);
                     evaluation.writeToFile(answerQuestions, SAVE_FILE_PATH);
+                    dboImplements.insertInto("Numbers", evaluation);
                     answerQuestions.clear();
                 }
                 else{
@@ -145,6 +150,7 @@ public class QuestionUI {
         c.gridy = 1;
         radioButton0.addActionListener(this::radioButtonGroupListener);
         radioButtonGroupScore.add(radioButton0);
+        radioButton0.setSelected(true);
 
         answerPanel.add(radioButton0, c);
 
